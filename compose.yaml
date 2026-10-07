@@ -1,0 +1,10 @@
+services:
+  sanjara-hadir:
+    build: .
+    container_name: sanjara-hadir
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/srv/app/data
+    restart: unless-stopped
