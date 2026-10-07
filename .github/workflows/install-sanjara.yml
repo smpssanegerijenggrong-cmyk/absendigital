@@ -56,6 +56,7 @@ jobs:
           test -f "$src/vercel.json"
           find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
           cp -a "$src"/. .
+          grep -qxF 'itsdangerous>=2.2,<3' requirements.txt || echo 'itsdangerous>=2.2,<3' >> requirements.txt
 
       - uses: actions/setup-python@v5
         with:
