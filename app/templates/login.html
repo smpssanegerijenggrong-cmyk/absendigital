@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% block title %}Masuk{% endblock %}
+{% block auth %}
+<div class="login-page"><div class="login-art"><div class="hero-brand"><div class="brand-mark">S</div><span>SANJARA<span class="brand-accent">HADIR</span></span></div><div class="login-art-content"><div class="eyebrow">SCHOOL EDITION</div><h1>Presensi lebih sederhana.<br><em>Sekolah lebih tertata.</em></h1><p>Sistem kehadiran murid berbasis QR Code, lokasi sekolah, surat izin digital, dan rekap otomatis.</p><div class="login-highlights"><span>◈ Scan QR otomatis</span><span>◉ Validasi GPS</span><span>▤ Rekap Excel</span></div></div><div class="art-footer">SMP SSA Negeri Jenggrong Ranuyoso</div></div>
+<div class="login-form-area"><form class="login-panel" action="/login" method="post"><input type="hidden" name="_csrf" value="{{ csrf }}"><div class="login-icon">✦</div><p class="eyebrow teal">AKSES TERBATAS</p><h2>Selamat datang kembali</h2><p class="muted">Masuk sebagai administrator atau petugas sekolah.</p>
+{% for alert in notices %}<div class="alert {{ alert.kind }}">{{ alert.message }}</div>{% endfor %}
+{% if not installed %}<div class="alert error">Admin belum dibuat. Atur ADMIN_PASSWORD di berkas .env lalu jalankan ulang server.</div>{% endif %}
+<label>Username<input name="username" autocomplete="username" required placeholder="Contoh: admin"></label>
+<label>Kata sandi<input name="password" type="password" autocomplete="current-password" required placeholder="Masukkan kata sandi"></label>
+<button class="btn primary wide" type="submit">Masuk ke ruang sekolah <span>→</span></button><p class="login-privacy">🔒 Akses khusus petugas. Data siswa disimpan di server sekolah.</p></form></div></div>
+{% endblock %}

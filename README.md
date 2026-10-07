@@ -132,3 +132,23 @@ SANJARA_HADIR/
 ```
 
 **Versi ini dibuat dari awal, bukan copy-paste source proyek lama. Tidak ada tindakan push atau perubahan repository GitHub.**
+
+## Deploy ke Vercel — perbaikan entrypoint
+
+Versi ini menyertakan dua penanda entrypoint agar Vercel dapat mengenali FastAPI:
+
+- `main.py` di root yang mengekspor `app` dari `app.main`;
+- `pyproject.toml` dengan `[tool.vercel] entrypoint = "app.main:app"`.
+
+Di Vercel, set Environment Variables minimum:
+
+- `SECRET_KEY` = string acak panjang minimal 32 karakter;
+- `ADMIN_USERNAME` = username admin;
+- `ADMIN_PASSWORD` = password kuat minimal 10 karakter;
+- `SESSION_SECURE=1`.
+
+### Penting mengenai data di Vercel
+
+Filesystem Vercel Functions tidak cocok untuk SQLite persisten. Bila `VERCEL` terdeteksi dan `DATA_DIR` tidak disetel, aplikasi memakai `/tmp/sanjara-hadir` agar deployment dapat boot, tetapi data di sana **sementara dan dapat hilang kapan saja**. Mode ini cocok untuk pratinjau/testing saja, bukan pencatatan absensi resmi.
+
+Untuk produksi di Vercel, sambungkan database persisten sebelum memasukkan data siswa. Alternatifnya jalankan aplikasi ini pada server/container yang menyediakan volume persisten untuk `DATA_DIR`.

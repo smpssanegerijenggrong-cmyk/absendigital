@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10283c">
+<title>{% block title %}SANJARA HADIR{% endblock %} · School Edition</title>
+<link rel="stylesheet" href="/static/style.css">
+<link rel="icon" href="/static/logo.svg" type="image/svg+xml">
+</head>
+<body class="{% if page=='login' %}login-layout{% endif %}">
+{% if user %}
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-mark">S</div><div><strong>SANJARA<span>HADIR</span></strong><small>SCHOOL EDITION</small></div></div>
+    <div class="nav-label">MENU UTAMA</div>
+    <nav class="nav">
+       <a class="{% if page=='dashboard' %}active{% endif %}" href="/"><span class="navicon">▦</span> Dashboard</a>
+       <a class="{% if page=='scan' %}active{% endif %}" href="/scan"><span class="navicon">▣</span> Scan QR Absensi</a>
+       <a class="{% if page=='students' %}active{% endif %}" href="/students"><span class="navicon">♙</span> Data Siswa</a>
+       <a class="{% if page=='classes' %}active{% endif %}" href="/classes"><span class="navicon">▤</span> Data Kelas</a>
+       <a class="{% if page=='cards' %}active{% endif %}" href="/cards"><span class="navicon">▥</span> Kartu ID Siswa</a>
+       <a class="{% if page=='leave' %}active{% endif %}" href="/leave"><span class="navicon">✉</span> Sakit & Ijin</a>
+       <a class="{% if page=='reports' %}active{% endif %}" href="/reports"><span class="navicon">▥</span> Rekap & Excel</a>
+    </nav>
+    {% if user.role=='ADMIN' %}<div class="nav-label">ADMINISTRASI</div><nav class="nav">
+       <a class="{% if page=='users' %}active{% endif %}" href="/users"><span class="navicon">◎</span> Akun Petugas</a>
+       <a class="{% if page=='settings' %}active{% endif %}" href="/settings"><span class="navicon">⚙</span> Pengaturan & Backup</a>
+    </nav>{% endif %}
+    <div class="sidebar-bottom"><div class="sidebar-note"><span class="dot"></span> Waktu resmi WIB<br><small>Absensi berbasis QR & GPS</small></div>
+      <a href="/profile" class="sidebar-person" title="Profil dan ubah kata sandi"><div class="avatar">{{ user.display_name[:1]|upper }}</div><div><strong>{{ user.display_name }}</strong><small>{{ 'Administrator' if user.role=='ADMIN' else 'Petugas Sekolah' }}</small></div></a>
+      <form method="post" action="/logout"><input type="hidden" name="_csrf" value="{{ csrf }}"><button class="sidebar-logout" type="submit">Keluar akun <span>↗</span></button></form>
+    </div>
+  </aside>
+  <div class="backdrop" id="backdrop" hidden></div>
+  <div class="workarea">
+    <header class="topbar"><button type="button" id="mobile-menu" class="mobile-menu" aria-label="Buka menu">☰</button><div class="breadcrumb">Ruang Sekolah <span>›</span> {% block breadcrumb %}Dashboard{% endblock %}</div><div class="top-right"><span class="top-online"><span class="dot"></span> Sistem Aktif</span><span class="top-date">{{ today }}</span><div class="top-avatar">{{ user.display_name[:1]|upper }}</div></div></header>
+    <main class="content">
+      {% for alert in notices %}<div class="alert {{ alert.kind }}" role="status">{{ alert.message }}</div>{% endfor %}
+      {% block body %}{% endblock %}
+      <footer class="footer">© {{ current_year }} SANJARA HADIR · SMP SSA Negeri Jenggrong Ranuyoso <span>School Edition v2.0</span></footer>
+    </main>
+  </div>
+</div>
+{% else %}{% block auth %}{% endblock %}{% endif %}
+<script src="/static/main.js" defer></script>
+{% block scripts %}{% endblock %}
+</body></html>
