@@ -1,6 +1,6 @@
 # SANJARA HADIR — School Edition 2.0
 
-**Aplikasi absensi QR siswa SMP SSA Negeri Jenggrong Ranuyoso**. Proyek ini dibangun ulang dengan arsitektur FastAPI + SQLite lokal yang persisten, halaman HTML responsif, dan hak akses berbasis peran. **Source code ini belum diunggah ke GitHub.**
+**Aplikasi absensi QR siswa SMP SSA Negeri Jenggrong Ranuyoso**. Proyek ini dibangun ulang dengan arsitektur FastAPI + SQLite lokal yang persisten, halaman HTML responsif, dan hak akses berbasis peran. **Source code ini tersimpan di repository GitHub `absendigital` dan siap digunakan untuk deployment.**
 
 ## 1. Apa saja fiturnya?
 
